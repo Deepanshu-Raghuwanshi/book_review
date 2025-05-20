@@ -178,12 +178,3 @@ curl -X GET http://localhost:5000/api/search?query=gatsby
 7. **Average Rating**: Calculated on-the-fly using MongoDB aggregation.
 
 8. **Swagger Documentation**: Comprehensive API documentation with examples and schemas.
-
-## Future Improvements
-
-- Add rate limiting
-- Implement refresh tokens
-- Add user roles (admin, moderator)
-- Add image upload for book covers
-- Implement caching for frequently accessed data
-- Add unit and integration tests
