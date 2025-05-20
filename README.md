@@ -29,6 +29,7 @@ A RESTful API for a book review system built with Node.js, Express, and MongoDB.
 1. Clone the repository
 2. Install dependencies:
    ```bash
+   cd book_review
    npm install
    ```
 3. Create a `.env` file in the root directory with the following variables:
