@@ -7,7 +7,6 @@ const {
 const { protect } = require("../middleware/auth");
 
 const router = express.Router();
-
 /**
  * @swagger
  * /api/auth/signup:

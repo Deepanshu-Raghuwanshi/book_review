@@ -67,7 +67,7 @@ router.post("/", protect, createBook);
  * @swagger
  * /api/books:
  *   get:
- *     summary: Get all books with pagination and optional filters
+ *     summary: Get all books with pagination, optional filters, and their reviews
  *     tags: [Books]
  *     parameters:
  *       - in: query
@@ -94,7 +94,7 @@ router.post("/", protect, createBook);
  *         description: Filter by genre (case-insensitive, partial match)
  *     responses:
  *       200:
- *         description: List of books
+ *         description: List of books with their reviews
  *         content:
  *           application/json:
  *             schema:
@@ -151,6 +151,36 @@ router.post("/", protect, createBook);
  *                         type: string
  *                         format: date-time
  *                         example: 2023-01-01T00:00:00.000Z
+ *                       averageRating:
+ *                         type: number
+ *                         example: 4.5
+ *                       reviews:
+ *                         type: array
+ *                         items:
+ *                           type: object
+ *                           properties:
+ *                             _id:
+ *                               type: string
+ *                               example: 60d0fe4f5311236168a109cc
+ *                             rating:
+ *                               type: number
+ *                               example: 5
+ *                             comment:
+ *                               type: string
+ *                               example: Great book, highly recommended!
+ *                             user:
+ *                               type: object
+ *                               properties:
+ *                                 _id:
+ *                                   type: string
+ *                                   example: 60d0fe4f5311236168a109cb
+ *                                 username:
+ *                                   type: string
+ *                                   example: johndoe
+ *                             createdAt:
+ *                               type: string
+ *                               format: date-time
+ *                               example: 2023-01-01T00:00:00.000Z
  */
 router.get("/", getBooks);
 

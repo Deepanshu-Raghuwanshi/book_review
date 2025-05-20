@@ -7,7 +7,7 @@ const router = express.Router();
  * @swagger
  * /api/search:
  *   get:
- *     summary: Search books by title or author
+ *     summary: Search books by title or author and return with reviews
  *     tags: [Search]
  *     parameters:
  *       - in: query
@@ -30,7 +30,7 @@ const router = express.Router();
  *         description: Number of books per page
  *     responses:
  *       200:
- *         description: Search results
+ *         description: Search results with reviews
  *         content:
  *           application/json:
  *             schema:
@@ -87,6 +87,36 @@ const router = express.Router();
  *                         type: string
  *                         format: date-time
  *                         example: 2023-01-01T00:00:00.000Z
+ *                       averageRating:
+ *                         type: number
+ *                         example: 4.5
+ *                       reviews:
+ *                         type: array
+ *                         items:
+ *                           type: object
+ *                           properties:
+ *                             _id:
+ *                               type: string
+ *                               example: 60d0fe4f5311236168a109cc
+ *                             rating:
+ *                               type: number
+ *                               example: 5
+ *                             comment:
+ *                               type: string
+ *                               example: Great book, highly recommended!
+ *                             user:
+ *                               type: object
+ *                               properties:
+ *                                 _id:
+ *                                   type: string
+ *                                   example: 60d0fe4f5311236168a109cb
+ *                                 username:
+ *                                   type: string
+ *                                   example: johndoe
+ *                             createdAt:
+ *                               type: string
+ *                               format: date-time
+ *                               example: 2023-01-01T00:00:00.000Z
  *       400:
  *         description: No search query provided
  */

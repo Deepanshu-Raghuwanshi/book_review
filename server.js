@@ -1,6 +1,5 @@
 const express = require("express");
 const dotenv = require("dotenv");
-const path = require("path");
 const connectDB = require("./config/db");
 const errorHandler = require("./middleware/errorHandler");
 const responseInterceptor = require("./middleware/responseInterceptor");

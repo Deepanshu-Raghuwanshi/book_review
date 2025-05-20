@@ -54,11 +54,18 @@ const getBooks = async (req, res, next) => {
       query.genre = { $regex: req.query.genre, $options: "i" };
     }
 
-    // Execute query
+    // Execute query with populated reviews
     const books = await Book.find(query)
       .skip(startIndex)
       .limit(limit)
-      .sort({ createdAt: -1 });
+      .sort({ createdAt: -1 })
+      .populate({
+        path: "reviews",
+        populate: {
+          path: "user",
+          select: "username",
+        },
+      });
 
     // Get total count
     const total = await Book.countDocuments(query);
@@ -71,10 +78,21 @@ const getBooks = async (req, res, next) => {
       limit,
     };
 
+    // Get average ratings for each book
+    const booksWithRatings = await Promise.all(
+      books.map(async (book) => {
+        const averageRating = await Review.getAverageRating(book._id);
+        return {
+          ...book.toObject(),
+          averageRating,
+        };
+      })
+    );
+
     res.json({
       success: true,
       pagination,
-      data: books,
+      data: booksWithRatings,
     });
   } catch (error) {
     next(error);
@@ -168,7 +186,14 @@ const searchBooks = async (req, res, next) => {
     })
       .skip(startIndex)
       .limit(limit)
-      .sort({ createdAt: -1 });
+      .sort({ createdAt: -1 })
+      .populate({
+        path: "reviews",
+        populate: {
+          path: "user",
+          select: "username",
+        },
+      });
 
     // Get total count
     const total = await Book.countDocuments({
@@ -186,10 +211,21 @@ const searchBooks = async (req, res, next) => {
       limit,
     };
 
+    // Get average ratings for each book
+    const booksWithRatings = await Promise.all(
+      books.map(async (book) => {
+        const averageRating = await Review.getAverageRating(book._id);
+        return {
+          ...book.toObject(),
+          averageRating,
+        };
+      })
+    );
+
     res.json({
       success: true,
       pagination,
-      data: books,
+      data: booksWithRatings,
     });
   } catch (error) {
     next(error);
